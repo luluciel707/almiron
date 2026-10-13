@@ -1,73 +1,260 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Ruleta CorrentinApp</title>
-
-    <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1026">
+  <title>BrainQuest | Insert Brain. Start Game.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@500;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
+  <div class="background-effects" aria-hidden="true">
+    <div class="grid-bg"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="scanlines"></div>
+  </div>
 
-    <main class="contenedor">
+  <header class="topbar">
+    <button class="brand" id="home-btn" aria-label="Volver al inicio">
+      <span class="brand-icon">B<span>Q</span></span>
+      <span>BRAIN<span class="neon-text">QUEST</span></span>
+    </button>
+    <div class="top-actions">
+      <button class="icon-btn" id="ranking-btn" title="Ranking">🏆 <span>Ranking</span></button>
+      <button class="icon-btn" id="settings-btn" title="Configuración">⚙️</button>
+    </div>
+  </header>
 
-        <h1>🎡 CorrentinApp</h1>
-        <h2>Descubriendo nuestra provincia</h2>
-
-        <p class="subtitulo">
-            Geografía • Producción • Naturaleza
+  <main class="app">
+    <!-- INICIO -->
+    <section class="screen active" id="home-screen">
+      <div class="hero">
+        <div class="pixel-emblem" aria-hidden="true">
+          <span>✦</span>
+          <div class="pixel-core">B</div>
+          <span>✦</span>
+        </div>
+        <p class="eyebrow">✦ YOUR KNOWLEDGE IS YOUR POWER ✦</p>
+        <h1>BRAIN<span class="neon-text">QUEST</span></h1>
+        <p class="hero-description">
+          Aprendé, superá desafíos y convertite en una leyenda del conocimiento.
         </p>
 
-        <!-- PUNTAJE -->
-        <section class="marcador">
-            <span>⭐ Puntaje: <strong id="puntaje">0</strong></span>
-            <span>🎯 Preguntas: <strong id="contador">0</strong></span>
-        </section>
+        <form id="player-form" class="player-form">
+          <label for="player-name">¿CÓMO TE LLAMÁS, PLAYER?</label>
+          <input id="player-name" type="text" maxlength="20"
+            placeholder="Tu nombre o apodo..." autocomplete="nickname" required>
+          <button class="primary-btn" type="submit">
+            <span>START GAME</span><span class="btn-arrow">▶</span>
+          </button>
+        </form>
 
-        <!-- RULETA -->
-        <section class="zona-ruleta">
+        <div class="subject-mini-grid">
+          <span class="mini-subject math-color">∑ MATH</span>
+          <span class="mini-subject code-color">&lt;/&gt; CODE</span>
+          <span class="mini-subject history-color">⌛ HISTORY</span>
+          <span class="mini-subject english-color">ABC ENGLISH</span>
+        </div>
+      </div>
+    </section>
 
-            <div class="flecha">▼</div>
+    <!-- CONFIGURACIÓN DE PARTIDA -->
+    <section class="screen" id="setup-screen">
+      <div class="section-heading">
+        <p class="eyebrow">PLAYER SELECT</p>
+        <h2>Prepará tu <span class="neon-text">misión</span></h2>
+        <p>Elegí cómo querés jugar.!</p>
+      </div>
 
-            <div id="ruleta" class="ruleta">
+      <div class="panel setup-panel">
+        <div class="field">
+          <label for="game-mode">MODO DE JUEGO</label>
+          <select id="game-mode">
+            <option value="random">🎡 Ruleta aleatoria</option>
+            <option value="subject">🎯 Elegir una materia</option>
+            <option value="topic">🔎 Elegir un tema</option>
+          </select>
+        </div>
 
-                <div class="centro">
-                    CORRIENTES
-                </div>
+        <div class="field" id="subject-field">
+          <label for="subject-select">MATERIA</label>
+          <select id="subject-select">
+            <option value="math">∑ Matemáticas</option>
+            <option value="programming">&lt;/&gt; Programación</option>
+            <option value="history">⌛ Historia</option>
+            <option value="english">ABC Inglés</option>
+          </select>
+        </div>
 
-            </div>
+        <div class="field hidden" id="topic-field">
+          <label for="topic-select">TEMA ESPECÍFICO</label>
+          <select id="topic-select"></select>
+        </div>
 
-        </section>
+        <div class="field">
+          <label for="difficulty-select">DIFICULTAD</label>
+          <select id="difficulty-select">
+            <option value="all">🎲 Todas las dificultades</option>
+            <option value="easy">🟢 Fácil</option>
+            <option value="medium">🟡 Normal</option>
+            <option value="hard">🔴 Difícil</option>
+          </select>
+        </div>
 
-        <button id="botonGirar" class="boton-girar">
-            🎡 GIRAR RULETA
+        <div class="field">
+          <label for="question-count">CANTIDAD DE PREGUNTAS</label>
+          <div class="count-row">
+            <button type="button" class="count-btn" data-count="5">5</button>
+            <button type="button" class="count-btn selected" data-count="10">10</button>
+            <button type="button" class="count-btn" data-count="15">15</button>
+            <button type="button" class="count-btn" data-count="20">20</button>
+            <button type="button" class="count-btn" data-count="30">30</button>
+            <button type="button" class="count-btn" data-count="50">50</button>
+          </div>
+          <input id="question-count" type="number" min="1" max="100"
+            value="10" placeholder="O escribí una cantidad (máximo 100)">
+          <p class="field-hint" id="available-hint">La cantidad se ajustará a las preguntas disponibles.</p>
+        </div>
+
+        <button class="primary-btn" id="begin-game-btn">
+          <span>¡A JUGAR!</span><span class="btn-arrow">▶</span>
         </button>
+        <button class="text-btn" id="setup-back-btn">← Volver al inicio</button>
+      </div>
+    </section>
 
-        <!-- TARJETA DE PREGUNTA -->
-        <section id="tarjetaPregunta" class="tarjeta oculto">
+    <!-- JUEGO -->
+    <section class="screen" id="game-screen">
+      <div class="game-top">
+        <div>
+          <p class="eyebrow">PLAYER <span id="game-player">01</span></p>
+          <h2 id="game-subject-title">MODO ARCADE</h2>
+        </div>
+        <div class="score-card">
+          <span>XP</span>
+          <strong id="score-display">0</strong>
+        </div>
+      </div>
 
-            <span id="categoria" class="categoria"></span>
+      <div class="progress-info">
+        <span id="progress-label">Pregunta 1 de 10</span>
+        <span id="streak-label">🔥 Racha: 0</span>
+      </div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
 
-            <h3 id="tema"></h3>
+      <div id="roulette-area" class="panel roulette-panel hidden">
+        <p class="eyebrow">LET FATE DECIDE</p>
+        <h3>¿Vas a probar tu conocimiento?</h3>
+        <div class="wheel-wrap">
+          <span class="wheel-pointer">▼</span>
+          <div class="wheel" id="wheel">
+            <span class="wheel-label wheel-math">∑<small>MATEMATICAS</small></span>
+            <span class="wheel-label wheel-code">&lt;/&gt;<small>CODIGO</small></span>
+            <span class="wheel-label wheel-history">⌛<small>HISTORIA</small></span>
+            <span class="wheel-label wheel-english">ABC<small>INGLÉS</small></span>
+          </div>
+        </div>
+        <p id="roulette-message">¡Gira la ruleta!</p>
+        <button class="primary-btn" id="spin-btn">🎡 GIRAR RULETA</button>
+      </div>
 
-            <p id="pregunta"></p>
+      <div id="question-area" class="panel question-panel hidden">
+        <div class="question-meta">
+          <span class="tag" id="question-subject">MATEMÁTICAS</span>
+          <span class="tag difficulty-tag" id="question-difficulty">FÁCIL</span>
+        </div>
+        <p class="question-counter" id="question-counter">PREGUNTA 01</p>
+        <h3 id="question-text">Pregunta de ejemplo</h3>
+        <div class="answers-grid" id="answers-grid"></div>
+        <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+        <button class="primary-btn hidden" id="next-question-btn">SIGUIENTE →</button>
+      </div>
 
-            <div id="opciones" class="opciones">
-            </div>
+      <button class="text-btn quit-btn" id="quit-game-btn">✕ Abandonar partida</button>
+    </section>
 
-            <p id="resultado" class="resultado"></p>
+    <!-- RESULTADOS -->
+    <section class="screen" id="results-screen">
+      <div class="results-hero">
+        <div class="trophy">🏆</div>
+        <p class="eyebrow">COMPLETADO</p>
+        <h2 id="result-title">¡Buen trabajo!</h2>
+        <p id="result-player">Player</p>
+        <div class="final-score"><strong id="final-score">0</strong><span>XP</span></div>
+      </div>
 
-        </section>
+      <div class="stats-grid">
+        <div class="stat-card"><span>✅</span><strong id="result-correct">0/0</strong><small>Correctas</small></div>
+        <div class="stat-card"><span>🎯</span><strong id="result-accuracy">0%</strong><small>Precisión</small></div>
+        <div class="stat-card"><span>🔥</span><strong id="result-streak">0</strong><small>Mejor racha</small></div>
+      </div>
 
-        <footer>
-            Laboratorio de Aplicaciones II • 2026
-        </footer>
+      <div class="panel recap-panel">
+        <h3>📚 Repasá lo aprendido</h3>
+        <p>Estas son las preguntas que respondiste mal:</p>
+        <div id="mistakes-list"></div>
+      </div>
 
-    </main>
+      <div class="results-actions">
+        <button class="primary-btn" id="play-again-btn">↻ JUGAR OTRA VEZ</button>
+        <button class="secondary-btn" id="results-ranking-btn">🏆 VER RANKING</button>
+        <button class="text-btn" id="results-home-btn">← Volver al inicio</button>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- RANKING -->
+    <section class="screen" id="ranking-screen">
+      <div class="section-heading">
+        <p class="eyebrow">HALL OF FAME</p>
+        <h2>Ranking <span class="neon-text">arcade</span></h2>
+        <p>Los mejores puntajes guardados en esta computadora.</p>
+      </div>
 
+      <div class="ranking-tabs">
+        <button class="ranking-tab active" data-ranking="total">XP acumulados</button>
+        <button class="ranking-tab" data-ranking="best">Mejor récord</button>
+      </div>
+
+      <div class="panel ranking-panel">
+        <div class="ranking-header"><span>#</span><span>PLAYER</span><span>PUNTOS</span></div>
+        <div id="ranking-list"></div>
+        <p id="empty-ranking" class="empty-state">Todavía no hay jugadores. ¡Sé el primero!</p>
+      </div>
+      <button class="primary-btn" id="ranking-play-btn">¡QUIERO UN RÉCORD! ▶</button>
+      <button class="text-btn" id="ranking-home-btn">← Volver al inicio</button>
+      <button class="danger-text" id="clear-ranking-btn">Borrar ranking local</button>
+    </section>
+
+    <!-- CONFIGURACIÓN -->
+    <section class="screen" id="settings-screen">
+      <div class="section-heading">
+        <p class="eyebrow">SYSTEM SETTINGS</p>
+        <h2>Configuración</h2>
+      </div>
+      <div class="panel settings-panel">
+        <label class="setting-row">
+          <span><strong>Sonidos</strong><small>Activar sonidos de respuesta.</small></span>
+          <input id="sound-toggle" type="checkbox" checked>
+        </label>
+        <label class="setting-row">
+          <span><strong>Animaciones intensas</strong><small>Destellos, movimiento y efectos arcade.</small></span>
+          <input id="effects-toggle" type="checkbox" checked>
+        </label>
+        <p class="field-hint">Los récords se guardan en este navegador. No se envían a internet.</p>
+        <button class="primary-btn" id="settings-back-btn">GUARDAR Y VOLVER</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© BRAINQUEST</span>
+    <span>INSERT BRAIN. START GAME.</span>
+  </footer>
 </body>
 </html>
